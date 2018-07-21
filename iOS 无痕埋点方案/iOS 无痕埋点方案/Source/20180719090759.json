@@ -1,0 +1,133 @@
+{
+    "ACTION": {
+        "ViewController/jumpSecond": {
+            "userDefined": {
+                "eventid": "201803074|93",
+                "target": "",
+                "pageid": "234",
+                "pagename": "button点击，跳转至下一个页面"
+            },
+            "pagePara": {
+                "testKey9": {
+                    "propertyName": "testPara",
+                    "propertyPath":"",
+                    "containIn": "0"
+                }
+            }
+        },
+        
+        "SecondViewController/back": {
+            "userDefined": {
+                "eventid": "201803074|965",
+                "target": "second",
+                "pageid": "234",
+                "pagename": "button点击，返回"
+            },
+            "pagePara": {
+                "testKey9": {
+                    "propertyName": "testPara",
+                    "propertyPath":"",
+                    "containIn": "0"
+                }
+            }
+        }
+    },
+    
+    "PAGEPV": {
+        "ViewController": {
+            "userDefined": {
+                "pageid": "234",
+                "pagename": "XXX 页面展示了"
+            },
+            "pagePara": {
+                "testKey10": {
+                    "propertyName": "testPara",
+                    "propertyPath":"",
+                    "containIn": "0"
+                }
+            }
+        },
+        "SecondViewController": {
+            "userDefined": {
+                "pageid": "234",
+                "pagename": "XXX页面展示"
+            },
+            "pagePara": {
+                "testKey0": {
+                    "propertyName": "age",
+                    "propertyPath":"",
+                    "containIn": "0"
+                }
+            }
+        }
+    },
+    "TABLEVIEW": {
+        "ViewController/UITableView/0":{
+            "userDefined": {
+                "eventid": "201803074|93",
+                "target": "",
+                "pageid": "234",
+                "pagename": "tableview 被点击"
+            },
+            "pagePara": {
+                "user_grade": {
+                    "propertyName": "grade",
+                    "propertyPath":"",
+                    "containIn": "1"
+                }
+            }
+        }
+    },
+    
+    "GESTURE": {
+        "ViewController/controllerclicked:":{
+            "userDefined": {
+                "eventid": "201803074|93",
+                "target": "",
+                "pageid": "123",
+                "pagename": "手势响应"
+            },
+            "pagePara": {
+                "testKey1": {
+                    "propertyName": "testPara",
+                    "propertyPath":"",
+                    "containIn": "0"
+                }
+                
+            }
+        },
+        "ViewController/controllerclicked123:":{
+            "userDefined": {
+                "eventid": "201803074|93",
+                "target": "",
+                "pageid": "123",
+                "pagename": "手势响应123"
+            },
+            "pagePara": {
+                "testKey2": {
+                    "propertyName": "testPara",
+                    "propertyPath":"",
+                    "containIn": "0"
+                }
+                
+            }
+        },
+        
+        "SecondViewController/clicked:":{
+            "userDefined": {
+                "eventid": "201803074|98",
+                "target": "",
+                "pageid": "clicked",
+                "pagename": "手势响应111"
+            },
+            "pagePara": {
+                "user_age": {
+                    "propertyName": "age",
+                    "propertyPath":"",
+                    "containIn": "0"
+                }
+                
+            }
+        }
+    }
+}
