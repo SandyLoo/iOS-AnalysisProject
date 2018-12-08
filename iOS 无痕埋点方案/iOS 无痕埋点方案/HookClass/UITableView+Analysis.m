@@ -17,7 +17,7 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-
+        
         SEL originalAppearSelector = @selector(setDelegate:);
         SEL swizzingAppearSelector = @selector(user_setDelegate:);
         [MethodSwizzingTool swizzingForClass:[self class] originalSel:originalAppearSelector swizzingSel:swizzingAppearSelector];
@@ -31,24 +31,28 @@
     [self user_setDelegate:delegate];
     
     SEL sel = @selector(tableView:didSelectRowAtIndexPath:);
-
+    
     SEL sel_ =  NSSelectorFromString([NSString stringWithFormat:@"%@/%@/%ld", NSStringFromClass([delegate class]), NSStringFromClass([self class]),self.tag]);
     
-    class_addMethod([delegate class],
-                    sel_,
-                    method_getImplementation(class_getInstanceMethod([self class], @selector(user_tableView:didSelectRowAtIndexPath:))),
-                    nil);
     
-
-    //判断是否有实现，没有的话添加一个实现
+    //因为 tableView:didSelectRowAtIndexPath:方法是optional的，所以没有实现的时候直接return
     if (![self isContainSel:sel inClass:[delegate class]]) {
-        IMP imp = method_getImplementation(class_getInstanceMethod([delegate class], sel));
-        class_addMethod([delegate class], sel, imp, nil);
+        
+        return;
     }
     
     
-    // 将swizzle delegate method 和 origin delegate method 交换
-    [MethodSwizzingTool swizzingForClass:[delegate class] originalSel:sel swizzingSel:sel_];
+    BOOL addsuccess = class_addMethod([delegate class],
+                                      sel_,
+                                      method_getImplementation(class_getInstanceMethod([self class], @selector(user_tableView:didSelectRowAtIndexPath:))),
+                                      nil);
+    
+    //如果添加成功了就直接交换实现， 如果没有添加成功，说明之前已经添加过并交换过实现了
+    if (addsuccess) {
+        Method selMethod = class_getInstanceMethod([delegate class], sel);
+        Method sel_Method = class_getInstanceMethod([delegate class], sel_);
+        method_exchangeImplementations(selMethod, sel_Method);
+    }
 }
 
 
@@ -68,7 +72,7 @@
 }
 
 
-
+// 由于我们交换了方法， 所以在tableview的 didselected 被调用的时候， 实质调用的是以下方法：
 -(void)user_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -107,11 +111,5 @@
     }
     
 }
-
-
-
-
-
-
 
 @end

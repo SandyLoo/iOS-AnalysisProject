@@ -62,7 +62,7 @@
         }
     },
     "TABLEVIEW": {
-        "ViewController/UITableView/0":{
+        "ViewController/TestTableview/0":{
             "userDefined": {
                 "eventid": "201803074|93",
                 "target": "",
@@ -80,12 +80,12 @@
     },
     
     "GESTURE": {
-        "ViewController/controllerclicked:":{
+        "ViewController/gesture1clicked:":{
             "userDefined": {
                 "eventid": "201803074|93",
                 "target": "",
-                "pageid": "123",
-                "pagename": "手势响应"
+                "pageid": "手势1对应的id",
+                "pagename": "手势1对应的page name"
             },
             "pagePara": {
                 "testKey1": {
@@ -96,12 +96,12 @@
                 
             }
         },
-        "ViewController/controllerclicked123:":{
+        "ViewController/gesture2clicked:":{
             "userDefined": {
                 "eventid": "201803074|93",
                 "target": "",
-                "pageid": "123",
-                "pagename": "手势响应123"
+                "pageid": "手势2对应的id",
+                "pagename": "手势2对应的page name"
             },
             "pagePara": {
                 "testKey2": {
@@ -113,21 +113,20 @@
             }
         },
         
-        "SecondViewController/clicked:":{
+        "SecondViewController/gesture3clicked:":{
             "userDefined": {
                 "eventid": "201803074|98",
                 "target": "",
-                "pageid": "clicked",
-                "pagename": "手势响应111"
+                "pageid": "gesture3clicked",
+                "pagename": "手势3对应的page name"
             },
             "pagePara": {
                 "user_age": {
-                    "propertyName": "age",
-                    "propertyPath":"",
-                    "containIn": "0"
+                  
                 }
                 
             }
         }
     }
 }
+

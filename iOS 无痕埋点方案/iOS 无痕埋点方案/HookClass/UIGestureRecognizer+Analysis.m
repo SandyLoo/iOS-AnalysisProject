@@ -9,6 +9,8 @@
 #import "UIGestureRecognizer+Analysis.h"
 #import "MethodSwizzingTool.h"
 #import <objc/runtime.h>
+#import "UIGestureRecognizer+gesture.h"
+
 
 @implementation UIGestureRecognizer (Analysis)
 
@@ -36,21 +38,23 @@
     Class class = [target class];
     
     
-    SEL originalSEL = action;
+    SEL sel = action;
     
     NSString * sel_name = [NSString stringWithFormat:@"%s/%@", class_getName([target class]),NSStringFromSelector(action)];
-    SEL swizzledSEL =  NSSelectorFromString(sel_name);
+    SEL sel_ =  NSSelectorFromString(sel_name);
     
     BOOL isAddMethod = class_addMethod(class,
-                                       swizzledSEL,
+                                       sel_,
                                        method_getImplementation(class_getInstanceMethod([self class], @selector(responseUser_gesture:))),
                                        nil);
     
+    self.methodName = NSStringFromSelector(action);
     if (isAddMethod) {
-        [MethodSwizzingTool swizzingForClass:class originalSel:originalSEL swizzingSel:swizzledSEL];
+        Method selMethod = class_getInstanceMethod(class, sel);
+        Method sel_Method = class_getInstanceMethod(class, sel_);
+        method_exchangeImplementations(selMethod, sel_Method);
     }
     
-    self.name = NSStringFromSelector(action);
     return selfGestureRecognizer;
 }
 
@@ -58,7 +62,7 @@
 -(void)responseUser_gesture:(UIGestureRecognizer *)gesture
 {
     
-    NSString * identifier = [NSString stringWithFormat:@"%s/%@", class_getName([self class]),gesture.name];
+    NSString * identifier = [NSString stringWithFormat:@"%s/%@", class_getName([self class]),gesture.methodName];
     
     SEL sel = NSSelectorFromString(identifier);
     if ([self respondsToSelector:sel]) {

@@ -15,10 +15,11 @@
 #import "ThirdModel.h"
 #import "SecondViewController.h"
 #import "DataContainer.h"
+#import "TestTableview.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property(nonatomic,strong)UITableView * tableView;
+@property(nonatomic,strong)TestTableview * tableView;
 
 @property(nonatomic,strong)NSMutableArray * dataArray;
 
@@ -31,71 +32,72 @@
 
 @implementation ViewController
 
+-(void)dealloc
+{
+    NSLog(@"ViewController 释放");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
     self.testPara = @"para in page";
-   
     
-    self.tableView = [[UITableView alloc]init];
-    self.tableView.frame = CGRectMake(0, 0, 375, 667);
+    
+    self.tableView = [[TestTableview alloc]init];
+    self.tableView.frame = CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[MyCell class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:self.tableView];
     
-
-    UIView * myview = [UIView new];
-    myview.backgroundColor = [UIColor yellowColor];
-    myview.frame = CGRectMake(30, 300, 200, 50);
-    [self.view addSubview:myview];
     
-    UILabel * label = [UILabel new];
-    label.text = @"点击触发手势埋点 -1";
-    label.frame = CGRectMake(0, 0, 200, 50);
-    label.textAlignment = NSTextAlignmentCenter;
-    [myview addSubview:label];
-
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controllerclicked:)];
-    [myview addGestureRecognizer:tap];
-    
-    
-    UIView * myview1 = [UIView new];
-    myview1.backgroundColor = [UIColor yellowColor];
-    myview1.frame = CGRectMake(30, 400, 200, 50);
-    [self.view addSubview:myview1];
-    
-    UILabel * label1 = [UILabel new];
-    label1.text = @"点击触发手势埋点 -2";
-    label1.frame = CGRectMake(0, 0, 200, 50);
-    label1.textAlignment = NSTextAlignmentCenter;
-    [myview1 addSubview:label1];
-    
-    
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(controllerclicked123:)];
-    [myview1 addGestureRecognizer:tap1];
-    
-    
-    
-    
+    //点击
     UIButton * jumpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    jumpButton.frame = CGRectMake(30, 130, 200, 50);
+    jumpButton.frame = CGRectMake(30, 80, 200, 50);
     [jumpButton setTitle:@"点击跳转，已做埋点" forState:UIControlStateNormal];
     jumpButton.backgroundColor = [UIColor grayColor];
     [jumpButton addTarget:self action:@selector(jumpSecond) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:jumpButton];
     
     
+    //手势1
+    UILabel * tapLabel1 = [[UILabel alloc]init];
+    tapLabel1.frame = CGRectMake(30,140, 200, 50);
+    tapLabel1.text = @"点击触发手势埋点 -1";
+    tapLabel1.textAlignment = NSTextAlignmentCenter;
+    tapLabel1.textColor = [UIColor whiteColor];
+    tapLabel1.backgroundColor = [UIColor grayColor];
+    tapLabel1.userInteractionEnabled = YES;
+    [self.view addSubview:tapLabel1];
+    
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesture1clicked:)];
+    [tapLabel1 addGestureRecognizer:tap1];
+    
+    
+    //手势2
+    UILabel * tapLabel2 = [[UILabel alloc]init];
+    tapLabel2.frame = CGRectMake(30,200, 200, 50);
+    tapLabel2.text = @"点击触发手势埋点 2";
+    tapLabel2.textAlignment = NSTextAlignmentCenter;
+    tapLabel2.textColor = [UIColor whiteColor];
+    tapLabel2.backgroundColor = [UIColor grayColor];
+    tapLabel2.userInteractionEnabled = YES;
+    [self.view addSubview:tapLabel2];
+    
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesture2clicked:)];
+    [tapLabel2 addGestureRecognizer:tap2];
+    
 }
 
--(void)controllerclicked:(UIGestureRecognizer *)ges
+-(void)gesture1clicked:(UIGestureRecognizer *)ges
 {
-    NSLog(@"手势被点击了 vc");
+    NSLog(@"手势1触发");
 }
 
--(void)controllerclicked123:(UIGestureRecognizer *)ges
+-(void)gesture2clicked:(UIGestureRecognizer *)ges
 {
-    NSLog(@"手势被点击了 vc");
+    NSLog(@"手势2触发");
 }
 
 
@@ -120,8 +122,6 @@
     MyCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
     TestModel * model = self.dataArray[indexPath.row];
-    
-        
     
     cell.model = model;
     return cell;
@@ -165,3 +165,4 @@
 
 
 @end
+

@@ -21,21 +21,24 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIView * myview = [UIView new];
-    myview.backgroundColor = [UIColor yellowColor];
-    myview.frame = CGRectMake(0, 0, 200, 50);
-    myview.center = self.view.center;
-    [self.view addSubview:myview];
+
+    //手势3
+    UILabel * tapLabel3 = [[UILabel alloc]init];
+    tapLabel3.frame = CGRectMake(0,0, 200, 50);
+    tapLabel3.text = @"点击触发手势埋点";
+    tapLabel3.textAlignment = NSTextAlignmentCenter;
+    tapLabel3.textColor = [UIColor whiteColor];
+    tapLabel3.backgroundColor = [UIColor grayColor];
+    tapLabel3.userInteractionEnabled = YES;
+    tapLabel3.center = self.view.center;
+    [self.view addSubview:tapLabel3];
     
-    UILabel * label = [UILabel new];
-    label.text = @"点击触发手势埋点";
-    label.frame = CGRectMake(0, 0, 200, 50);
-    label.textAlignment = NSTextAlignmentCenter;
-    [myview addSubview:label];
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesture3clicked:)];
+    [tapLabel3 addGestureRecognizer:tap1];
     
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clicked:)];
-    [myview addGestureRecognizer:tap];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gesture3clicked:)];
+    [tapLabel3 addGestureRecognizer:tap];
     
     
     UIButton * jumpButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -51,7 +54,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)clicked:(UIGestureRecognizer *)ges
+-(void)gesture3clicked:(UIGestureRecognizer *)ges
 {
     
     
